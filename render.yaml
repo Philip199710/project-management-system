@@ -1,0 +1,61 @@
+services:
+  # ============ BACKEND WEB SERVICE ============
+  - type: web
+    name: project-management-api
+    env: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: GITHUB_TOKEN
+        fromDatabase:
+          name: project-management-db
+          property: GITHUB_TOKEN
+      - key: CORS_ORIGIN
+        value: https://project-management-frontend.onrender.com,https://project-management-api.onrender.com
+      - key: PORT
+        value: 5000
+
+  # ============ FRONTEND STATIC SITE ============
+  - type: web
+    name: project-management-frontend
+    env: node
+    plan: free
+    buildCommand: cd public && npm install && npm run build
+    startCommand: npm start
+    staticPublishPath: build
+    envVars:
+      - key: REACT_APP_API_URL
+        value: https://project-management-api.onrender.com
+      - key: NODE_ENV
+        value: production
+
+  # ============ POSTGRES DATABASE ============
+  - type: pserv
+    name: project-management-db
+    plan: free
+    region: ohio
+    ipAllowList: []
+
+  # ============ CRON JOB (optional - for cleanup/backup) ============
+  - type: cron
+    name: project-management-cleanup
+    schedule: "0 2 * * *"  # Daily at 2 AM
+    dockerImage: node:18-alpine
+    command: npm run cleanup
+
+databases:
+  - name: project-management-db
+    plan: free
+    region: ohio
+
+# ============ ENVIRONMENT SETUP ============
+envVars:
+  - key: GITHUB_TOKEN
+    sync: false
+  - key: JWT_SECRET
+    sync: false
+  - key: DATABASE_URL
+    sync: false
