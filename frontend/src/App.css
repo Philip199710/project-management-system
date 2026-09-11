@@ -7,15 +7,18 @@
 }
 
 :root {
-  --primary: #3b82f6;
-  --secondary: #10b981;
+  --primary: #0c4a6e;
+  --primary-dark: #082f49;
+  --primary-light: #0f5a7a;
+  --success: #10b981;
   --danger: #ef4444;
   --warning: #f59e0b;
-  --dark: #1f2937;
-  --light: #f3f4f6;
-  --border: #e5e7eb;
-  --text: #374151;
-  --text-light: #9ca3af;
+  --dark: #0f172a;
+  --light: #f8fafc;
+  --border: #e2e8f0;
+  --text: #334155;
+  --text-light: #64748b;
+  --bg-card: #ffffff;
 }
 
 body {
@@ -37,18 +40,21 @@ body {
 }
 
 .app-header {
-  background: linear-gradient(135deg, var(--primary) 0%, #2563eb 100%);
+  background: var(--primary);
   color: white;
-  padding: 2rem;
+  padding: 1.5rem 2rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 .app-header h1 {
   font-size: 1.8rem;
   font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
 }
 
 .app-container {
@@ -61,7 +67,7 @@ body {
 
 .sidebar {
   width: 280px;
-  background: white;
+  background: var(--bg-card);
   border-right: 1px solid var(--border);
   overflow-y: auto;
   box-shadow: 2px 0 4px rgba(0, 0, 0, 0.05);
@@ -77,6 +83,7 @@ body {
   text-transform: uppercase;
   color: var(--text-light);
   padding: 0 1.5rem 1rem;
+  letter-spacing: 0.05em;
 }
 
 .project-item {
@@ -95,9 +102,10 @@ body {
 }
 
 .project-item.active {
-  background: #eff6ff;
+  background: #eff8ff;
   border-left-color: var(--primary);
   font-weight: 500;
+  color: var(--primary);
 }
 
 .project-name {
@@ -127,7 +135,7 @@ body {
 .view-tabs {
   display: flex;
   gap: 0;
-  background: white;
+  background: var(--bg-card);
   border-bottom: 1px solid var(--border);
   padding: 0 2rem;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
@@ -152,6 +160,7 @@ body {
 .tab.active {
   color: var(--primary);
   border-bottom-color: var(--primary);
+  font-weight: 600;
 }
 
 .empty-state {
@@ -166,6 +175,7 @@ body {
 
 .empty-state h2 {
   margin-bottom: 0.5rem;
+  color: var(--dark);
 }
 
 .empty-state p {
@@ -188,6 +198,7 @@ body {
 .project-header h2 {
   font-size: 2rem;
   margin-bottom: 0.5rem;
+  color: var(--dark);
 }
 
 .project-header p {
@@ -199,23 +210,23 @@ body {
 
 .stats-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 1.5rem;
   margin-bottom: 2rem;
 }
 
 .stat-card {
-  background: white;
+  background: var(--bg-card);
   padding: 1.5rem;
   border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   border-left: 4px solid;
-  transition: transform 0.2s;
+  transition: all 0.2s;
 }
 
 .stat-card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .stat-card h3 {
@@ -223,17 +234,18 @@ body {
   font-weight: 600;
   color: var(--text-light);
   text-transform: uppercase;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.75rem;
+  letter-spacing: 0.05em;
 }
 
 .stat-value {
-  font-size: 2rem;
+  font-size: 2.5rem;
   font-weight: 700;
 }
 
 .stat-blue {
-  border-left-color: #3b82f6;
-  color: #3b82f6;
+  border-left-color: #0c4a6e;
+  color: #0c4a6e;
 }
 
 .stat-green {
@@ -254,11 +266,11 @@ body {
 /* ============ PROGRESS ============ */
 
 .progress-section {
-  background: white;
+  background: var(--bg-card);
   padding: 1.5rem;
   border-radius: 8px;
   margin-bottom: 2rem;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .progress-info {
@@ -271,6 +283,7 @@ body {
 .progress-info h3 {
   font-size: 1rem;
   font-weight: 600;
+  color: var(--dark);
 }
 
 .progress-percent {
@@ -288,18 +301,18 @@ body {
 
 .progress-fill {
   height: 100%;
-  background: linear-gradient(90deg, var(--primary), var(--secondary));
+  background: var(--primary);
   transition: width 0.3s ease;
 }
 
 /* ============ TIMELINE INFO ============ */
 
 .timeline-info {
-  background: white;
+  background: var(--bg-card);
   padding: 1.5rem;
   border-radius: 8px;
   margin-bottom: 2rem;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .timeline-info p {
@@ -337,15 +350,16 @@ body {
 /* ============ TASK LIST ============ */
 
 .recent-tasks {
-  background: white;
+  background: var(--bg-card);
   padding: 1.5rem;
   border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .recent-tasks h3 {
   margin-bottom: 1.5rem;
   font-size: 1.125rem;
+  color: var(--dark);
 }
 
 .task-list {
@@ -365,11 +379,12 @@ body {
 }
 
 .task-item:hover {
-  background: #e8eef7;
+  background: #eff8ff;
 }
 
 .task-info h4 {
   margin-bottom: 0.25rem;
+  color: var(--dark);
 }
 
 .task-info p {
@@ -403,7 +418,7 @@ body {
 
 .status-in-progress {
   background: #dbeafe;
-  color: #1e40af;
+  color: #0c4a6e;
 }
 
 .status-completed {
@@ -442,13 +457,14 @@ body {
 
 .gantt-view h2 {
   margin-bottom: 1.5rem;
+  color: var(--dark);
 }
 
 .gantt-container {
-  background: white;
+  background: var(--bg-card);
   border-radius: 8px;
   overflow: hidden;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .gantt-tasks {
@@ -515,25 +531,23 @@ body {
   background: #10b981;
 }
 
-.gantt-bar-label {
-  display: none;
-}
-
-.gantt-bar:hover .gantt-bar-label {
-  display: inline;
-}
-
 /* ============ GITHUB VIEW ============ */
 
 .github-view {
   padding: 2rem;
 }
 
+.github-view h2 {
+  color: var(--dark);
+  margin-bottom: 1rem;
+}
+
 .repo-link {
-  background: white;
+  background: var(--bg-card);
   padding: 1rem;
   border-radius: 8px;
   margin-bottom: 2rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .repo-link a {
@@ -553,6 +567,7 @@ body {
 .github-section h3 {
   margin-bottom: 1rem;
   font-size: 1.125rem;
+  color: var(--dark);
 }
 
 .issues-list,
@@ -563,11 +578,11 @@ body {
 
 .issue-item,
 .pull-item {
-  background: white;
+  background: var(--bg-card);
   padding: 1.5rem;
   border-radius: 8px;
   border-left: 4px solid var(--primary);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   transition: all 0.2s;
 }
 
@@ -588,6 +603,7 @@ body {
 .pull-header h4 {
   flex: 1;
   margin: 0;
+  color: var(--dark);
 }
 
 .label {
@@ -627,7 +643,7 @@ body {
 
 .issue-link:hover,
 .pull-link:hover {
-  color: #2563eb;
+  color: var(--primary-dark);
 }
 
 /* ============ TEAM VIEW ============ */
@@ -645,6 +661,7 @@ body {
 
 .team-header h2 {
   margin: 0;
+  color: var(--dark);
 }
 
 .team-grid {
@@ -654,11 +671,11 @@ body {
 }
 
 .member-card {
-  background: white;
+  background: var(--bg-card);
   padding: 1.5rem;
   border-radius: 8px;
   text-align: center;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   transition: all 0.2s;
 }
 
@@ -671,7 +688,7 @@ body {
   width: 60px;
   height: 60px;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  background: var(--primary);
   color: white;
   display: flex;
   align-items: center;
@@ -683,6 +700,7 @@ body {
 
 .member-card h3 {
   margin-bottom: 0.25rem;
+  color: var(--dark);
 }
 
 .member-email {
@@ -702,11 +720,6 @@ body {
   margin-bottom: 1rem;
 }
 
-.member-tasks {
-  font-size: 0.875rem;
-  color: var(--text-light);
-}
-
 /* ============ DOCUMENTS VIEW ============ */
 
 .documents-view {
@@ -722,6 +735,7 @@ body {
 
 .docs-header h2 {
   margin: 0;
+  color: var(--dark);
 }
 
 .documents-list {
@@ -730,20 +744,14 @@ body {
   gap: 1rem;
 }
 
-.documents-list.empty {
-  text-align: center;
-  padding: 3rem;
-  color: var(--text-light);
-}
-
 .document-item {
-  background: white;
+  background: var(--bg-card);
   padding: 1.5rem;
   border-radius: 8px;
   display: flex;
   align-items: center;
   gap: 1.5rem;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   transition: all 0.2s;
 }
 
@@ -762,17 +770,13 @@ body {
 
 .doc-info h4 {
   margin-bottom: 0.25rem;
+  color: var(--dark);
 }
 
 .doc-type {
   font-size: 0.875rem;
   color: var(--text-light);
   margin-bottom: 0.5rem;
-}
-
-.doc-info small {
-  color: var(--text-light);
-  font-size: 0.8rem;
 }
 
 .doc-link {
@@ -784,7 +788,7 @@ body {
 }
 
 .doc-link:hover {
-  color: #2563eb;
+  color: var(--primary-dark);
 }
 
 /* ============ BUTTONS ============ */
@@ -794,7 +798,7 @@ body {
   border: none;
   border-radius: 6px;
   font-size: 0.95rem;
-  font-weight: 500;
+  font-weight: 600;
   cursor: pointer;
   transition: all 0.2s;
   display: inline-flex;
@@ -808,9 +812,9 @@ body {
 }
 
 .btn-primary:hover {
-  background: #2563eb;
+  background: var(--primary-dark);
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+  box-shadow: 0 4px 12px rgba(12, 74, 110, 0.4);
 }
 
 .btn-secondary {
@@ -841,7 +845,7 @@ body {
 }
 
 .modal {
-  background: white;
+  background: var(--bg-card);
   border-radius: 12px;
   padding: 2rem;
   max-width: 500px;
@@ -851,6 +855,7 @@ body {
 
 .modal h2 {
   margin-bottom: 1.5rem;
+  color: var(--dark);
 }
 
 .modal form {
@@ -875,7 +880,7 @@ body {
 .modal select:focus {
   outline: none;
   border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  box-shadow: 0 0 0 3px rgba(12, 74, 110, 0.1);
 }
 
 .modal textarea {
@@ -905,7 +910,6 @@ body {
     border-right: none;
     border-bottom: 1px solid var(--border);
     max-height: 200px;
-    overflow-x: auto;
   }
 
   .projects-list {
@@ -913,10 +917,6 @@ body {
     gap: 0.5rem;
     padding: 1rem;
     overflow-x: auto;
-  }
-
-  .project-item {
-    flex-shrink: 0;
   }
 
   .view-tabs {
@@ -934,10 +934,6 @@ body {
 
   .team-grid {
     grid-template-columns: 1fr;
-  }
-
-  .gantt-task-name {
-    width: 150px;
   }
 
   .modal {
@@ -963,15 +959,5 @@ body {
   .tab {
     padding: 0.75rem;
     font-size: 0.85rem;
-  }
-
-  .document-item {
-    flex-direction: column;
-    text-align: center;
-  }
-
-  .doc-link {
-    display: block;
-    margin-top: 0.5rem;
   }
 }
