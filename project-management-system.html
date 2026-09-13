@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Project Management System</title>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --primary: #0c4a6e;
+  --primary-dark: #082f49;
+  --light: #f8fafc;
+  --border: #e2e8f0;
+  --text: #334155;
+  --text-light: #64748b;
+  --success: #10b981;
+  --danger: #ef4444;
+  --warning: #f59e0b;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  background: var(--light);
+  color: var(--text);
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.app-header {
+  background: white;
+  padding: 1.5rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-bottom: 2px solid var(--primary);
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.logo-img {
+  height: 40px;
+  object-fit: contain;
+}
+
+.app-header h1 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: white;
+  padding: 0.625rem 1.25rem;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-primary:hover {
+  background: var(--primary-dark);
+  box-shadow: 0 4px 12px rgba(12, 74, 110, 0.4);
+}
+
+.container {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+.sidebar {
+  width: 250px;
+  background: white;
+  border-right: 1px solid var(--border);
+  overflow-y: auto;
+}
+
+.projects-list {
+  padding: 1.5rem 0;
+}
+
+.projects-list h2 {
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--text-light);
+  padding: 0 1.5rem 1rem;
+}
+
+.project-item {
+  padding: 0.75rem 1.5rem;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.2s;
+  border-left: 4px solid transparent;
+}
+
+.project-item:hover {
+  background: var(--light);
+}
+
+.project-item.active {
+  background: #eff8ff;
+  border-left-color: var(--primary);
+  color: var(--primary);
+  font-weight: 500;
+}
+
+.project-name {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.project-status {
+  font-size: 0.75rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  background: var(--light);
+  color: var(--text-light);
+  text-transform: capitalize;
+}
+
+.main {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.tabs {
+  display: flex;
+  gap: 0;
+  background: white;
+  border-bottom: 1px solid var(--border);
+  padding: 0 2rem;
+}
+
+.tab {
+  padding: 1rem 1.5rem;
+  border: none;
+  background: none;
+  color: var(--text-light);
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 500;
+  border-bottom: 3px solid transparent;
+  transition: all 0.2s;
+}
+
+.tab:hover {
+  color: var(--text);
+}
+
+.tab.active {
+  color: var(--primary);
+  border-bottom-color: var(--primary);
+}
+
+.content {
+  flex: 1;
+  padding: 2rem;
+  overflow-y: auto;
+}
+
+.project-header {
+  margin-bottom: 2rem;
+}
+
+.project-header h2 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  color: var(--text);
+}
+
+.project-header p {
+  color: var(--text-light);
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.stat-card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  border-left: 4px solid var(--primary);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.stat-card h3 {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-light);
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+}
+
+.stat-value {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.progress-section {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.progress-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.progress-bar {
+  height: 8px;
+  background: var(--light);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: var(--primary);
+  transition: width 0.3s ease;
+}
+
+.task-list {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.task-list h3 {
+  margin-bottom: 1.5rem;
+  font-size: 1.125rem;
+}
+
+.task-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background: var(--light);
+  border-radius: 6px;
+  margin-bottom: 1rem;
+}
+
+.task-info h4 {
+  margin-bottom: 0.25rem;
+  color: var(--text);
+}
+
+.task-info p {
+  font-size: 0.875rem;
+  color: var(--text-light);
+  margin-bottom: 0.5rem;
+}
+
+.task-meta {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.status-badge {
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.status-completed {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.status-in-progress {
+  background: #dbeafe;
+  color: #0c4a6e;
+}
+
+.status-pending {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.gantt-chart {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  overflow-x: auto;
+}
+
+.gantt-row {
+  display: flex;
+  border-bottom: 1px solid var(--border);
+  min-height: 60px;
+  margin-bottom: 1rem;
+}
+
+.gantt-task-name {
+  width: 200px;
+  padding: 1rem;
+  font-weight: 500;
+  flex-shrink: 0;
+}
+
+.gantt-bar-container {
+  flex: 1;
+  position: relative;
+  padding: 0.75rem;
+  min-width: 300px;
+}
+
+.gantt-bar {
+  position: absolute;
+  height: 32px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: white;
+}
+
+.bar-completed {
+  background: var(--success);
+}
+
+.bar-in-progress {
+  background: var(--warning);
+}
+
+.bar-pending {
+  background: var(--danger);
+  opacity: 0.6;
+}
+
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1.5rem;
+}
+
+.member-card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.member-avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: var(--primary);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  margin: 0 auto 1rem;
+}
+
+.member-card h3 {
+  margin-bottom: 0.25rem;
+  color: var(--text);
+}
+
+.member-email {
+  color: var(--text-light);
+  font-size: 0.875rem;
+  margin-bottom: 0.75rem;
+}
+
+.member-role {
+  display: inline-block;
+  background: var(--light);
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--primary);
+}
+
+.docs-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.doc-item {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.doc-icon {
+  font-size: 2.5rem;
+}
+
+.doc-info {
+  flex: 1;
+}
+
+.doc-info h4 {
+  margin-bottom: 0.25rem;
+  color: var(--text);
+}
+
+.doc-type {
+  font-size: 0.875rem;
+  color: var(--text-light);
+}
+
+.hidden {
+  display: none;
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="app-header">
+    <div class="header-left">
+      <svg class="logo-img" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <rect width="200" height="200" fill="white"/>
+        <text x="100" y="120" font-size="80" font-weight="bold" text-anchor="middle" fill="#0c4a6e" font-family="Arial">PM</text>
+      </svg>
+      <h1>Project Management</h1>
+    </div>
+    <button class="btn-primary" onclick="addProject()">+ New Project</button>
+  </header>
+
+  <div class="container">
+    <aside class="sidebar">
+      <div class="projects-list">
+        <h2>Projects</h2>
+        <div id="projectsList"></div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <nav class="tabs">
+        <button class="tab active" onclick="showTab('dashboard')">Dashboard</button>
+        <button class="tab" onclick="showTab('gantt')">Gantt Chart</button>
+        <button class="tab" onclick="showTab('team')">Team</button>
+        <button class="tab" onclick="showTab('documents')">Documents</button>
+      </nav>
+
+      <div class="content">
+        <div id="dashboard" class="tab-content">
+          <div id="dashboardContent"></div>
+        </div>
+
+        <div id="gantt" class="tab-content hidden">
+          <div id="ganttContent"></div>
+        </div>
+
+        <div id="team" class="tab-content hidden">
+          <div id="teamContent"></div>
+        </div>
+
+        <div id="documents" class="tab-content hidden">
+          <div id="documentsContent"></div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<script>
+const projects = [
+  {
+    id: 1,
+    name: 'Q4 Marketing Campaign',
+    status: 'in-progress',
+    progress: 65,
+    startDate: '2024-10-01',
+    endDate: '2024-12-31',
+    team: ['Alice Johnson', 'Bob Smith', 'Carol White'],
+    tasks: [
+      { name: 'Social Media Strategy', status: 'completed', priority: 'high' },
+      { name: 'Content Calendar', status: 'in-progress', priority: 'high' },
+      { name: 'Email Campaigns', status: 'pending', priority: 'medium' }
+    ]
+  },
+  {
+    id: 2,
+    name: 'Platform Redesign',
+    status: 'planning',
+    progress: 20,
+    startDate: '2024-11-15',
+    endDate: '2025-02-28',
+    team: ['David Lee', 'Emma Wilson'],
+    tasks: [
+      { name: 'Wireframes', status: 'in-progress', priority: 'high' },
+      { name: 'Design System', status: 'pending', priority: 'high' }
+    ]
+  },
+  {
+    id: 3,
+    name: 'API Integration',
+    status: 'completed',
+    progress: 100,
+    startDate: '2024-08-01',
+    endDate: '2024-10-15',
+    team: ['Frank Martinez', 'Grace Chen'],
+    tasks: [
+      { name: 'REST Endpoints', status: 'completed', priority: 'high' },
+      { name: 'Documentation', status: 'completed', priority: 'medium' }
+    ]
+  }
+];
+
+let selectedProject = projects[0];
+
+function renderProjects() {
+  const list = document.getElementById('projectsList');
+  list.innerHTML = projects.map(p => `
+    <div class="project-item ${p.id === selectedProject.id ? 'active' : ''}" onclick="selectProject(${p.id})">
+      <span class="project-name">${p.name}</span>
+      <span class="project-status">${p.status}</span>
+    </div>
+  `).join('');
+}
+
+function selectProject(id) {
+  selectedProject = projects.find(p => p.id === id);
+  renderProjects();
+  renderDashboard();
+}
+
+function renderDashboard() {
+  const content = document.getElementById('dashboardContent');
+  content.innerHTML = `
+    <div class="project-header">
+      <h2>${selectedProject.name}</h2>
+      <p>Status: ${selectedProject.status} • Progress: ${selectedProject.progress}%</p>
+    </div>
+
+    <div class="stats-grid">
+      <div class="stat-card">
+        <h3>Progress</h3>
+        <div class="stat-value">${selectedProject.progress}%</div>
+      </div>
+      <div class="stat-card">
+        <h3>Team Members</h3>
+        <div class="stat-value">${selectedProject.team.length}</div>
+      </div>
+      <div class="stat-card">
+        <h3>Total Tasks</h3>
+        <div class="stat-value">${selectedProject.tasks.length}</div>
+      </div>
+    </div>
+
+    <div class="progress-section">
+      <div class="progress-info">
+        <h3>Overall Progress</h3>
+        <span style="font-weight: 600; color: var(--primary);">${selectedProject.progress}%</span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill" style="width: ${selectedProject.progress}%"></div>
+      </div>
+    </div>
+
+    <div class="task-list">
+      <h3>Project Tasks</h3>
+      ${selectedProject.tasks.map(task => `
+        <div class="task-item">
+          <div class="task-info">
+            <h4>${task.name}</h4>
+          </div>
+          <div class="task-meta">
+            <span class="status-badge status-${task.status}">${task.status}</span>
+          </div>
+        </div>
+      `).join('')}
+    </div>
+  `;
+}
+
+function renderGantt() {
+  const content = document.getElementById('ganttContent');
+  content.innerHTML = `
+    <h2 style="margin-bottom: 2rem;">Gantt Chart</h2>
+    <div class="gantt-chart">
+      ${projects.map(p => `
+        <div class="gantt-row">
+          <div class="gantt-task-name">${p.name}</div>
+          <div class="gantt-bar-container">
+            <div class="gantt-bar bar-${p.status}" style="left: 10%; width: ${Math.max(p.progress, 10)}%;">
+              ${p.progress}%
+            </div>
+          </div>
+        </div>
+      `).join('')}
+    </div>
+  `;
+}
+
+function renderTeam() {
+  const content = document.getElementById('teamContent');
+  const allTeam = [...new Set(projects.flatMap(p => p.team))];
+  content.innerHTML = `
+    <h2 style="margin-bottom: 2rem;">Team Members</h2>
+    <div class="team-grid">
+      ${allTeam.map(member => `
+        <div class="member-card">
+          <div class="member-avatar">${member.split(' ').map(n => n[0]).join('')}</div>
+          <h3>${member}</h3>
+          <p class="member-email">${member.toLowerCase().replace(/\s/g, '.')}@company.com</p>
+          <div class="member-role">Team Member</div>
+        </div>
+      `).join('')}
+    </div>
+  `;
+}
+
+function renderDocuments() {
+  const content = document.getElementById('documentsContent');
+  content.innerHTML = `
+    <h2 style="margin-bottom: 2rem;">Project Documents</h2>
+    <div class="docs-list">
+      <div class="doc-item">
+        <div class="doc-icon">📄</div>
+        <div class="doc-info">
+          <h4>Project Charter</h4>
+          <p class="doc-type">PDF Document</p>
+        </div>
+      </div>
+      <div class="doc-item">
+        <div class="doc-icon">📊</div>
+        <div class="doc-info">
+          <h4>Budget Breakdown</h4>
+          <p class="doc-type">Excel Spreadsheet</p>
+        </div>
+      </div>
+      <div class="doc-item">
+        <div class="doc-icon">📋</div>
+        <div class="doc-info">
+          <h4>Risk Register</h4>
+          <p class="doc-type">Word Document</p>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function showTab(tabName) {
+  document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+  document.querySelectorAll('.tab').forEach(el => el.classList.remove('active'));
+  document.getElementById(tabName).classList.remove('hidden');
+  event.target.classList.add('active');
+  
+  if (tabName === 'gantt') renderGantt();
+  if (tabName === 'team') renderTeam();
+  if (tabName === 'documents') renderDocuments();
+}
+
+function addProject() {
+  alert('Add project functionality - you can customize this!');
+}
+
+renderProjects();
+renderDashboard();
+</script>
+</body>
+</html>
